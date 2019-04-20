@@ -1,15 +1,3 @@
-// window.onload = function () {
-//     var mymap = L.map('map').setView([51.505, -0.09], 13);
-
-//     L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
-//         attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-//         maxZoom: 18,
-//         id: 'mapbox.streets',
-//         accessToken: 'pk.eyJ1IjoidWN5byIsImEiOiJjaXNscG1oYTAwMDc5Mm5uNTBudDhoNm5uIn0.ofb4dzyt3bY9h6Bqul_Amg'
-//     }).addTo(mymap);
-
-// };
-
 window.onload = function () {
     var mymap = L.map('map').setView([-25.505, -63.09], 3);
     var markers = [];
@@ -34,8 +22,19 @@ window.onload = function () {
     mymap.on('click', onMapClick);
 
     document.getElementById("save_route").addEventListener("click", func);
+
+    // Generate a route link using the set markers
     function func() {
-        alert(markers)
+        baseurl = 'http://localhost:5000/route?';
+        generated_url = baseurl;
+        for ( var i = 0; i < markers.length; i++ ) {
+            m = markers[i];
+            generated_url += "lat=" + m["lat"];
+            generated_url += "&"
+            generated_url += "lon=" + m["lng"];
+            generated_url += "&"
+        }
+        window.open(generated_url.substring(0,generated_url.length - 1));
     }
 
 };
