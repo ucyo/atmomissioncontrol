@@ -23,4 +23,11 @@ window.onload = function () {
     //     accessToken: 'paste_token'
     // }).addTo(mymap);
 
+    var popup = L.popup();
+
+    function onMapClick(e) {
+        L.marker(e.latlng).bindPopup("Position: " + e.latlng.toString()).addTo(mymap);
+    }
+    mymap.on('click', onMapClick);
+
 };
