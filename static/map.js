@@ -12,6 +12,7 @@
 
 window.onload = function () {
     var mymap = L.map('map').setView([-25.505, -63.09], 3);
+    var markers = [];
 
     L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
@@ -27,7 +28,14 @@ window.onload = function () {
 
     function onMapClick(e) {
         L.marker(e.latlng).bindPopup("Position: " + e.latlng.toString()).addTo(mymap);
+        markers.push(e.latlng);
+        console.log(markers);
     }
     mymap.on('click', onMapClick);
+
+    document.getElementById("save_route").addEventListener("click", func);
+    function func() {
+        alert(markers)
+    }
 
 };
