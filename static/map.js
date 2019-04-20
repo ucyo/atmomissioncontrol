@@ -39,10 +39,11 @@ window.onload = function () {
     }
     mymap.on('click', onMapClick);
 
-    document.getElementById("save_route").addEventListener("click", func);
+    document.getElementById("get_curtain").addEventListener("click", get_curtain_url);
+    document.getElementById("get_route_url").addEventListener("click", get_route_url);
 
     // Generate a route link using the set markers
-    function func() {
+    function get_curtain_url() {
         baseurl = 'http://localhost:5000/route?';
         generated_url = baseurl;
         for ( var i = 0; i < markers.length; i++ ) {
@@ -53,6 +54,21 @@ window.onload = function () {
             generated_url += "&"
         }
         window.open(generated_url.substring(0,generated_url.length - 1));
+    }
+
+    // Generate a route link using the set markers
+    function get_route_url() {
+        baseurl = 'http://localhost:5000/hello/world?';
+        generated_url = baseurl;
+        for ( var i = 0; i < markers.length; i++ ) {
+            m = markers[i];
+            generated_url += "lat=" + m["lat"];
+            generated_url += "&"
+            generated_url += "lon=" + m["lng"];
+            generated_url += "&"
+        }
+        // window.open(generated_url.substring(0,generated_url.length - 1));
+        alert(generated_url.substring(0,generated_url.length - 1));
     }
 
 };
