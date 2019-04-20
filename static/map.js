@@ -1,10 +1,22 @@
 window.onload = function () {
-    var mymap = L.map('map').setView([-25.505, -63.09], 3);
+    var mymap = L.map('map', {
+        center: [-35.505, -63.09],
+        zoom: 4,
+        minZoom: 2,
+        maxZoom: 8,
+        maxBounds: [
+            [-89.9999, -179.9999],
+            [89.9999, 179.9999]
+        ],
+    }
+    );
     var markers = [];
-
+    // OpenStreetMap
     L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(mymap);
+
+    // MapBoxMap
     // L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
     //     attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
     //     maxZoom: 18,
