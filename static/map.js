@@ -1,4 +1,7 @@
 window.onload = function () {
+    var markers = getRequestMarkers();
+    console.log(markers);
+
     var mymap = L.map('map', {
         center: [-35.505, -63.09],
         zoom: 4,
@@ -7,10 +10,13 @@ window.onload = function () {
         maxBounds: [
             [-89.9999, -179.9999],
             [89.9999, 179.9999]
-        ],
+        ]});
+
+    for ( var i = 0; i < markers.length; i++ ) {
+        var m = markers[i];
+        // var m = L.marker([p.lat,p.lon]);
+        L.marker(m).bindPopup("Position: " + m.toString()).addTo(mymap);
     }
-    );
-    var markers = [];
     // OpenStreetMap
     L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
@@ -49,4 +55,24 @@ window.onload = function () {
         window.open(generated_url.substring(0,generated_url.length - 1));
     }
 
+};
+
+function getRequestMarkers() {
+    // Returns all request params
+    var s1 = location.search.substring(1, location.search.length).split('&'),
+        r = [], s2, i;
+    for (i = 0; i < s1.length; i += 1) {
+        var obj = {};
+        if (s1[i].split('=')[0] == 'lat'  &&  s1[i+1].split('=')[0] == 'lon')  {
+            for (j = 0; j < 2; j+=1) {
+                s2 = s1[i+j].split('=');
+                obj[decodeURIComponent(s2[0]).toLowerCase()] = decodeURIComponent(s2[1]);
+            }
+            var m = L.latLng(obj.lat,obj.lon)
+            r.push(m);
+        } else if (s1[i].substring(0,3) != 'lon'){
+            console.log("Skipping", s1[i]);
+        }
+    }
+    return r;
 };
