@@ -15,7 +15,7 @@ window.onload = function () {
     for ( var i = 0; i < markers.length; i++ ) {
         var m = markers[i];
         // var m = L.marker([p.lat,p.lon]);
-        L.marker(m).bindPopup("Position: " + m.toString()).addTo(mymap);
+        m.bindPopup("Position: " + m.toString()).addTo(mymap);
     }
     // OpenStreetMap
     L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
@@ -33,7 +33,7 @@ window.onload = function () {
     var popup = L.popup();
 
     function onMapClick(e) {
-        L.marker(e.latlng).bindPopup("Position: " + e.latlng.toString()).addTo(mymap);
+        L.marker(e.latlng, {draggable: true}).bindPopup("Position: " + e.latlng.toString()).addTo(mymap);
         markers.push(e.latlng);
         console.log(markers);
     }
@@ -84,8 +84,9 @@ function getRequestMarkers() {
                 s2 = s1[i+j].split('=');
                 obj[decodeURIComponent(s2[0]).toLowerCase()] = decodeURIComponent(s2[1]);
             }
-            var m = L.latLng(obj.lat,obj.lon)
-            r.push(m);
+        var g = L.latLng(obj.lat,obj.lon)
+        var m = L.marker(g, {draggable: true})
+        r.push(m);
         } else if (s1[i].substring(0,3) != 'lon'){
             console.log("Skipping", s1[i]);
         }
